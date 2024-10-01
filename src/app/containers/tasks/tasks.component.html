@@ -1,0 +1,55 @@
+<div class="pt-5 px-4">
+  <div class="mb-4 d-flex align-items-center justify-content-between">
+    <h3 class="text-secondary fw-bold">Lista de Tareas</h3>
+    <div class="d-flex gap-2 flex-wrap">
+      <app-nav-button *ngFor="let filter of taskFilters"
+        [label]="filter" [selected]="filter === selectedFilter"
+        (onClick)="setFilter(filter)">
+      </app-nav-button>
+    </div>
+  </div>
+
+	<div
+		*ngFor="let task of tasks$ | async; let i = index"
+		class="d-flex flex-column gap-3 mb-3 p-3 shadow rounded-3 bg-white"
+	>
+    <div class="d-flex align-items-center justify-content-between">
+      <h5 class="m-0">{{ task.id }}. {{ task.title }}</h5>
+      <button
+        type="button"
+        class="btn text-white fw-bold px-3"
+        [ngClass]="{'bg-success': task.completed, 'bg-gray-400': !task.completed}"
+        aria-label="Eliminar"
+        (click)="toggleTaskState(task)"
+      >
+        <small>{{ task.completed ? 'Completado' : 'Pendiente' }}</small>
+      </button>
+    </div>
+    <small class="ms-3 text-gray-600">Hasta el {{ task.endDate | date:'mediumDate' }}</small>
+
+    <div class="p-3 rounded-3 bg-gray-100">
+      <h6 class="fw-bold mb-3">Personas asociadas</h6>
+      <div
+        *ngFor="let person of task.people; let i = index"
+        class="d-flex flex-column gap-2 mb-3 p-3 border border-1 rounded-3 bg-white"
+      >
+        <div class="d-flex align-items-center gap-2">
+          <span class="fw-bold text-gray-800">{{ person.name }}</span>
+          <small>{{ person.age }} años</small>
+        </div>
+
+        <!-- Skills -->
+        <span>Habilidades</span>
+        <div class="mb-3 d-flex gap-2 flex-wrap">
+          <div
+            *ngFor="let skill of person.skills; let j = index"
+            class="px-3 rounded-4 bg-primary-100"
+          >
+            <span>{{ skill }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+	</div>
+</div>

@@ -1,0 +1,10 @@
+<nav class="navbar justify-content-center w-100 py-4 px-5">
+  <div class="d-flex justify-content-between col-12 col-md-6">
+    <h2 class="text-gray-700 fw-bold m-0">TASKS</h2>
+    <div class="d-flex gap-3">
+      <button class="btn btn-primary fw-bold px-3" aria-label="Crear Tarea" (click)="openModal()">Crear Tarea</button>
+    </div>
+
+  </div>
+  <app-modal-create-task #modalCreateTaskComponent></app-modal-create-task>
+</nav>

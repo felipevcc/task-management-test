@@ -1,0 +1,150 @@
+<ng-template #content let-modal>
+	<div class="modal-header">
+		<h5 class="modal-title fw-bold">Crear Nueva Tarea</h5>
+		<button
+			type="button"
+			class="btn-close border-0 shadow-none"
+			aria-label="Cerrar"
+			(click)="closeModal()"
+		></button>
+	</div>
+
+  <form [formGroup]="taskForm" (ngSubmit)="onSubmit()">
+	  <div class="modal-body d-flex flex-column gap-2">
+      <div class="mb-3">
+        <label for="taskTitle" class="form-label">Nombre de la tarea</label>
+        <input
+          type="text"
+          class="form-control"
+          id="taskTitle"
+          formControlName="title"
+          placeholder="Nombre"
+          aria-label="Nombre"
+        />
+        <small *ngIf="taskForm.get('title')?.touched && taskForm.get('title')?.invalid" class="text-danger">
+          El nombre de la tarea es obligatorio.
+        </small>
+      </div>
+
+      <div class="mb-3">
+        <label for="endDate" class="form-label">Fecha límite</label>
+        <input
+          type="date"
+          class="form-control"
+          id="endDate"
+          formControlName="endDate"
+          placeholder="Fecha"
+          aria-label="Fecha"
+        />
+        <small *ngIf="taskForm.get('endDate')?.touched && taskForm.get('endDate')?.invalid" class="text-danger">
+          La fecha límite es obligatoria.
+        </small>
+      </div>
+
+      <!-- People -->
+      <div class="p-3 rounded-3 bg-gray-100" formArrayName="people">
+        <h6 class="fw-bold mb-3">Personas asociadas</h6>
+        <div
+          *ngFor="let person of people.controls; let i = index"
+          [formGroupName]="i"
+          class="mb-3 p-3 border border-1 rounded-3 bg-white"
+        >
+          <div class="d-flex justify-content-between">
+            <span class="fw-bold text-gray-800">Persona {{ i + 1 }}</span>
+            <button
+              type="button"
+              class="btn bg-danger text-white fw-bold px-3"
+              aria-label="Eliminar"
+              (click)="removePerson(i)"
+            >
+              <small>Eliminar</small>
+            </button>
+          </div>
+          <div class="mb-3">
+            <label for="personName{{ i }}" class="form-label">Nombre completo</label>
+            <input
+              type="text"
+              class="form-control"
+              id="personName{{ i }}"
+              formControlName="name"
+              placeholder="Nombre"
+              aria-label="Nombre"
+            />
+            <small *ngIf="person.get('name')?.touched && person.get('name')?.invalid" class="text-danger">
+              El nombre es obligatorio y debe tener al menos 5 caracteres.
+            </small>
+          </div>
+
+          <div class="mb-3">
+            <label for="age{{ i }}" class="form-label">Edad</label>
+            <input
+              type="number"
+              class="form-control"
+              id="age{{ i }}"
+              formControlName="age"
+              placeholder="Edad"
+              aria-label="Edad"
+            />
+            <small *ngIf="person.get('age')?.touched && person.get('age')?.invalid" class="text-danger">
+              La edad es obligatoria y debe ser mayor o igual a 18.
+            </small>
+          </div>
+
+          <!-- Skills -->
+          <div formArrayName="skills" class="d-flex flex-column">
+            <label class="form-label">Habilidades</label>
+            <div *ngFor="let skill of getSkills(i).controls; let j = index" class="mb-3">
+              <div class="d-flex gap-3">
+                <input
+                  type="text"
+                  class="form-control"
+                  id="skillName{{ i }}{{ j }}"
+                  [formControlName]="j"
+                  placeholder="Habilidad"
+                  aria-label="Habilidad"
+                />
+                <button
+                  type="button"
+                  class="btn bg-danger text-white fw-bold"
+                  aria-label="Eliminar"
+                  (click)="removeSkill(i, j)"
+                >
+                  <small><i class="fa-solid fa-trash-can"></i></small>
+                </button>
+              </div>
+              <small *ngIf="skill.touched && skill.invalid" class="text-danger">
+                Habilidad requerida.
+              </small>
+            </div>
+            <button
+              type="button"
+              class="btn btn-primary fw-bold px-3 d-inline-flex align-self-start"
+              aria-label="Añadir"
+              (click)="addSkill(i)"
+            >
+              <small>Añadir Habilidad</small>
+            </button>
+          </div>
+        </div>
+
+        <button
+          type="button"
+          class="btn btn-primary fw-bold px-3"
+          aria-label="Añadir"
+          (click)="addPerson()"
+        >
+          <small>Añadir Persona</small>
+        </button>
+      </div>
+    </div>
+
+    <div class="modal-footer">
+      <button
+        type="submit"
+        class="btn btn-primary px-4 fw-bold"
+        >
+        Guardar Tarea
+      </button>
+    </div>
+  </form>
+</ng-template>

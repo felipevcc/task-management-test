@@ -1,0 +1,11 @@
+<div>
+  <button
+    type="button"
+    class="btn text-white fw-bold px-3"
+    [ngClass]="{'bg-secondary': selected, 'bg-primary-200': !selected}"
+    aria-label="Nav Button"
+    (click)="onBtnClick()"
+  >
+    <small>{{ label }}</small>
+  </button>
+</div>
