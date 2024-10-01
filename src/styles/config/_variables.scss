@@ -64,27 +64,6 @@ $theme-colors: (
 * {
   margin: 0;
   padding: 0;
-
-  // $secondary: #3c3cab;
-
-  // --body-color: #333333;
-  // --primary: #1ed760;
-  // --primary-light: #2ee06c;
-  // $warning: #fdcb2b;
-  // $danger: #ea164b;
-  // $success: #0ad167;
-
-  // --body-bg: white;
-
-  // --color-grayscale900: #1f1f1f;
-  // --color-grayscale800: #333333;
-  // --color-grayscale700: #393936;
-  // --color-grayscale600: #686868;
-  // --color-grayscale500: #999999;
-  // --color-grayscale400: #CCCCCC;
-  // --color-grayscale300: #DDDDDD;
-  // --color-grayscale200: #EEEEEE;
-  // --color-grayscale100: #FFFFFF;
 }
 
 @each $color-name, $color-value in $theme-colors {
