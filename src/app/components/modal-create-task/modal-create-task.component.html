@@ -127,14 +127,20 @@
           </div>
         </div>
 
-        <button
-          type="button"
-          class="btn btn-primary fw-bold px-3"
-          aria-label="Añadir"
-          (click)="addPerson()"
-        >
-          <small>Añadir Persona</small>
-        </button>
+        <div class="d-flex flex-column">
+          <small *ngIf="people.errors?.['uniqueNames']" class="mb-3 text-danger">
+            Los nombres de las personas deben ser únicos.
+          </small>
+
+          <button
+            type="button"
+            class="btn btn-primary fw-bold px-3 d-inline-flex align-self-start"
+            aria-label="Añadir"
+            (click)="addPerson()"
+          >
+            <small>Añadir Persona</small>
+          </button>
+        </div>
       </div>
     </div>
 

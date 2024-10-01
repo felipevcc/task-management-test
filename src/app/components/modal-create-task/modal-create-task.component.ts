@@ -40,7 +40,7 @@ export class ModalCreateTaskComponent {
             this.fb.control('', [Validators.required])
           ], [this.minArrayLength(1)])
         })
-      ], [this.minArrayLength(1)])
+      ], [this.minArrayLength(1), this.uniqueNamesValidator()])
     });
   }
 
@@ -63,6 +63,17 @@ export class ModalCreateTaskComponent {
     return (control: AbstractControl): { [key: string]: any } | null => {
       if (control && control.value && control.value.length < min) {
         return { 'minArrayLength': { valid: false } };
+      }
+      return null;
+    };
+  }
+
+  uniqueNamesValidator(): ValidatorFn {
+    return (control: AbstractControl): { [key: string]: any } | null => {
+      if (control instanceof FormArray) {
+        const names = control.controls.map(group => group.get('name')?.value);
+        const hasDuplicates = names.some((name, index) => names.indexOf(name) !== index);
+        return hasDuplicates ? { 'uniqueNames': { valid: false } } : null;
       }
       return null;
     };
